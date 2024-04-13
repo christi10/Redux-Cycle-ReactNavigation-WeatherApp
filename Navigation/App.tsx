@@ -10,10 +10,7 @@ function App(): React.JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-        />
+        <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
