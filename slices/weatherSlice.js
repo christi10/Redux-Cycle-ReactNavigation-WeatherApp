@@ -1,7 +1,3 @@
-// In weatherSlice.js
-
-// Import ActionTypes if not already imported
-// import * as ActionTypes from '../actions/types';
 
 // Define your action types
 export const ActionTypes = {

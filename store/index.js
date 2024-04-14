@@ -3,13 +3,12 @@ import {weatherReducer} from '../slices/weatherSlice';
 import {getWeatherDetails} from '../cycles/createCycle';
 import {createCycleMiddleware} from 'redux-cycles';
 import run from '@cycle/run';
-import { makeHTTPDriver } from '@cycle/http';
+import {makeHTTPDriver} from '@cycle/http';
 
 const rootReducer = combineReducers({
   weather: weatherReducer,
   // Add other reducers if any
 });
-
 
 const cycleMiddleware = createCycleMiddleware();
 const {makeActionDriver} = cycleMiddleware;
