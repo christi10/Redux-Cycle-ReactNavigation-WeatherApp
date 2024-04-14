@@ -4,7 +4,6 @@ import {getWeatherDetails} from '../cycles/createCycle';
 import {createCycleMiddleware} from 'redux-cycles';
 import run from '@cycle/run';
 import { makeHTTPDriver } from '@cycle/http';
-import {configureStore} from '@reduxjs/toolkit';
 
 const rootReducer = combineReducers({
   weather: weatherReducer,

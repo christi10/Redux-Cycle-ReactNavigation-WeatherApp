@@ -20,39 +20,83 @@ const initialState = {
       icon: '',
       text: '',
     },
-    // other properties...
+    feelslike_c: 0,
+    feelslike_f: 0,
+    gust_kph: 0,
+    gust_mph: 0,
+    humidity: 0,
+    is_day: 0,
+    last_updated: '',
+    last_updated_epoch: 0,
+    precip_in: 0,
+    precip_mm: 0,
+    pressure_in: 0,
+    pressure_mb: 0,
+    temp_c: 0,
+    temp_f: 0,
+    uv: 0,
+    vis_km: 0,
+    vis_miles: 0,
+    wind_degree: 0,
+    wind_dir: '',
+    wind_kph: 0,
+    wind_mph: 0,
   },
   location: {
     country: '',
     lat: 0,
     localtime: '',
-    // other properties...
+    localtime_epoch: 0,
+    lon: 0,
+    name: '',
+    region: '',
+    tz_id: '',
   },
+  loading: false,
+  error: null,
 };
 
 // Define your action handlers
 function fetchWeather(state, action) {
-  // You can update state here if needed
-  return state;
+  return {
+    ...state,
+    loading: true,
+    error: null,
+  };
 }
 
 function fetchWeatherSuccess(state, action) {
   const { current, location } = action.payload;
+
+  if (!location || !location.name) {
+    console.error('location object or name property is missing in the API response');
+    return state; // Return current state without making any changes
+  }
+
+
   return {
     ...state,
     current,
     location,
+    loading: false,
+    error: null,
   };
 }
 
 function fetchWeatherFailed(state, action) {
-  // You can update state here if needed
-  return state;
+  return {
+    ...state,
+    loading: false,
+    error: action.payload.error,
+  };
 }
 
 function fetchWeatherError(state, action) {
-  // You can update state here if needed
-  return state;
+  return {
+    ...state,
+    loading: false,
+    error: action.payload.error,
+  };
 }
 
 // Map action types to action handlers

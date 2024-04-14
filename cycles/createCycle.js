@@ -18,18 +18,31 @@ export function getWeatherDetails(sources) {
     ? sources.HTTP.select('SET_WEATHER_DATA')
         .map(response$ =>
           response$
-            .replaceError(err => xs.of(err)) // Handle errors
-            .filter(response => response.status === 200) // Filter successful responses
-            .map(response => ({
-              type: ActionTypes.FETCH_WEATHER_SUCCESS,
-              payload: response.body,
-            })),
+            .replaceError(err => xs.of({error: err})) // Handle errors
+            .map(response => {
+              if (response.status === 200) {
+                return {
+                  type: ActionTypes.FETCH_WEATHER_SUCCESS,
+                  payload: response.body,
+                };
+              }
+              return;
+            }),
         )
         .flatten()
     : xs.empty();
 
-  const action$ = response$.mapTo({type: ActionTypes.FETCH_WEATHER});
-
+  const action$ = xs.combine(response$).map(([response]) => {
+    if (response) {
+      return response;
+    }
+    else {
+      return {
+        type: ActionTypes.FETCH_WEATHER_FAILED,
+        payload: {error: 'Failed to fetch weather data'},
+      };
+    }
+  });
   return {
     ACTION: action$,
     HTTP: request$,
