@@ -1,5 +1,5 @@
 React Native Weather App
-This project is a React Native application for fetching and displaying weather information. It utilizes Java 17.0.0-tem and Node.js v18.19.0 for backend operations, while frontend components are developed using React Native. Redux is employed for state management, and calls to external APIs are made using a pure Redux cycle.js approach. Navigation within the application is facilitated by react-navigation/native v6.1.10.
+This project is a React Native application for fetching and displaying weather information. It utilizes Java 17.0.0-tem and Node.js v18.19.0 , while frontend components are developed using React Native. Redux is employed for state management, and calls to external APIs are made using a pure Redux cycle.js approach. Navigation within the application is facilitated by react-navigation/native v6.1.10.
 
 Getting Started
 Step 1: Start the Metro Server
