@@ -5,10 +5,9 @@ import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 export const WeatherComponent = ({weatherData}) => {
-  if (!weatherData) {
+  if (weatherData.loading === true) {
     return (
       <ActivityIndicator size="small" color="#0000ff">
-        {' '}
       </ActivityIndicator>
     );
   }
@@ -17,7 +16,7 @@ export const WeatherComponent = ({weatherData}) => {
 
   return (
     <View>
-      <Text>Location: {location.name},</Text>
+        <View style={{flexDirection:'row'}}><Text>Location: {location.name}<View style={{paddingRight:2}}></View></Text></View>
       <Text>Region:{location.region}</Text>
       <Text>Country:{location.country}</Text>
       <Text>
