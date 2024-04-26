@@ -1,26 +1,34 @@
-import {createStore, applyMiddleware, combineReducers} from 'redux';
-import {weatherReducer} from '../slices/weatherSlice';
-import {getWeatherDetails} from '../cycles/createCycle';
-import {createCycleMiddleware} from 'redux-cycles';
+import { createStore, combineReducers, compose, applyMiddleware } from 'redux'; // Include all necessary imports for Redux
+import { createCycleMiddleware } from 'redux-cycles';
+import { weatherReducer } from '../slices/weatherSlice';
+import { getWeatherDetails } from '../cycles/createCycle';
 import run from '@cycle/run';
-import {makeHTTPDriver} from '@cycle/http';
+import { makeHTTPDriver } from '@cycle/http';
+import Reactotron from '../ReactotronConfig';
+import reactotron from "../ReactotronConfig";
+import {composeWithDevTools} from "@reduxjs/toolkit/src/devtoolsExtension"; // Import the Reactotron configuration
 
 const rootReducer = combineReducers({
-  weather: weatherReducer,
-  // Add other reducers if any
+    weather: weatherReducer,
 });
-const middleWare = [];
-
+const composeEnhancers = composeWithDevTools({});
 const cycleMiddleware = createCycleMiddleware();
-const {makeActionDriver} = cycleMiddleware;
-const drivers = {
-  ACTION: makeActionDriver(),
-  HTTP: makeHTTPDriver(),
-};
-middleWare.push(cycleMiddleware);
+const { makeActionDriver } = cycleMiddleware;
 
-const store = createStore(rootReducer, applyMiddleware(cycleMiddleware));
+const middleware = [cycleMiddleware]; // Add additional middleware if needed
 
-run(getWeatherDetails, drivers); // Run your cycle function
+const enhancers = Reactotron?.createEnhancer
+    ? composeEnhancers(applyMiddleware(...middleware), reactotron.createEnhancer())
+    : composeEnhancers(applyMiddleware(...middleware));
+
+const store = createStore(
+    rootReducer,
+    enhancers
+);
+
+run(getWeatherDetails, {
+    ACTION: makeActionDriver(),
+    HTTP: makeHTTPDriver(),
+});
 
 export default store;

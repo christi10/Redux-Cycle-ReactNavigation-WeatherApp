@@ -13,6 +13,7 @@
     "@cycle/dom": "^23.1.0",
     "@cycle/http": "^15.4.0",
     "@cycle/run": "^5.7.0",
+    "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-navigation/native": "^6.1.10",
     "@react-navigation/native-stack": "^6.9.18",
     "@reduxjs/toolkit": "^2.2.3",
@@ -24,6 +25,7 @@
     "react-native-screens": "^3.29.0",
     "react-native-uuid": "^2.0.2",
     "react-redux": "^9.1.0",
+    "reactotron-redux": "^3.1.9",
     "redux": "^5.0.1",
     "redux-cycles": "^0.4.1",
     "xstream": "^11.14.0"
@@ -44,6 +46,7 @@
     "prettier": "2.8.8",
     "react-native-dotenv": "^3.4.11",
     "react-test-renderer": "18.2.0",
+    "reactotron-react-native": "^5.1.6",
     "typescript": "5.0.4"
   },
   "engines": {
