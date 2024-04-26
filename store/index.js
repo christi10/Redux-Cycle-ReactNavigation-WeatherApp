@@ -8,7 +8,7 @@ import Reactotron from '../ReactotronConfig';
 import reactotron from "../ReactotronConfig";
 import {composeWithDevTools} from "@reduxjs/toolkit/src/devtoolsExtension"; // Import the Reactotron configuration
 
-const rootReducer = combineReducers({
+const root = combineReducers({
     weather: weatherReducer,
 });
 const composeEnhancers = composeWithDevTools({});
@@ -17,12 +17,12 @@ const { makeActionDriver } = cycleMiddleware;
 
 const middleware = [cycleMiddleware]; // Add additional middleware if needed
 
-const enhancers = Reactotron?.createEnhancer
+const enhancers = reactotron?.createEnhancer
     ? composeEnhancers(applyMiddleware(...middleware), reactotron.createEnhancer())
     : composeEnhancers(applyMiddleware(...middleware));
 
 const store = createStore(
-    rootReducer,
+    root,
     enhancers
 );
 

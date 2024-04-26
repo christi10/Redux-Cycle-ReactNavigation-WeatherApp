@@ -25,6 +25,7 @@
     "react-native-screens": "^3.29.0",
     "react-native-uuid": "^2.0.2",
     "react-redux": "^9.1.0",
+    "reactotron-react-js": "^3.3.14",
     "reactotron-redux": "^3.1.9",
     "redux": "^5.0.1",
     "redux-cycles": "^0.4.1",
