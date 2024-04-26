@@ -62,13 +62,16 @@ function fetchWeather(state, action) {
 }
 
 function fetchWeatherSuccess(state, action) {
-  const { current, location } = action.payload;
+  const {  location,current } = action.payload;
 
   if (!location || !location.name) {
     console.error('location object or name property is missing in the API response');
-    return state; // Return current state without making any changes
+    return state;
   }
-
+  if (!current) {
+    console.error('current object is missing in the API response');
+    return state;
+  }
 
   return {
     ...state,

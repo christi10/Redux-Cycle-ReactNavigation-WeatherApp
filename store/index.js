@@ -9,6 +9,7 @@ const rootReducer = combineReducers({
   weather: weatherReducer,
   // Add other reducers if any
 });
+const middleWare = [];
 
 const cycleMiddleware = createCycleMiddleware();
 const {makeActionDriver} = cycleMiddleware;
@@ -16,6 +17,7 @@ const drivers = {
   ACTION: makeActionDriver(),
   HTTP: makeHTTPDriver(),
 };
+middleWare.push(cycleMiddleware);
 
 const store = createStore(rootReducer, applyMiddleware(cycleMiddleware));
 

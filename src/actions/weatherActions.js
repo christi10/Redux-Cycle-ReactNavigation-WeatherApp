@@ -1,7 +1,7 @@
 import {ActionTypes} from '../../slices/weatherSlice';
 
 export const getWeatherDetailsSuccess = weatherData => ({
-  type: ActionTypes.SET_WEATHER_DATA,
+  type: ActionTypes.FETCH_WEATHER_SUCCES,
   payload: weatherData,
 });
 

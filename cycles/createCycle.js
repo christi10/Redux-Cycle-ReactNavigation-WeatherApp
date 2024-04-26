@@ -1,24 +1,23 @@
 import {ActionTypes} from '../slices/weatherSlice';
 import {BASEURL, APIKEY} from '@env';
 import xs from 'xstream';
+import sampleCombine from "xstream/extra/sampleCombine";
 
 export function getWeatherDetails(sources) {
-  const request$ = sources.ACTION
-    ? sources.ACTION.filter(
-        action => action.type === ActionTypes.FETCH_WEATHER_SUCCESS,
-      ).map(action => ({
-        sources,
-        url: `${BASEURL}/current.json?key=${APIKEY}&q=${action.payload.city}`,
-        category: 'SET_WEATHER_DATA',
-        method: 'POST', // Change method to GET for fetching weather data
-      }))
-    : xs.empty();
+  const request$ = sources.ACTION.filter(
+        action => action.type === ActionTypes.FETCH_WEATHER,
+      ).compose(sampleCombine())
+      .map(([action]) => {
+          return {
+              url: `${BASEURL}/current.json?key=${APIKEY}&q=${action.payload.city}`,
+              category: 'SET_WEATHER_DATA',
+              method: 'POST',
+          }
+      })
 
-  const response$ = sources.HTTP
-    ? sources.HTTP.select('SET_WEATHER_DATA')
-        .map(response$ =>
-          response$
-            .replaceError(err => xs.of({error: err})) // Handle errors
+  const response$ = sources.HTTP.select('SET_WEATHER_DATA')
+        .map(response =>
+          response.replaceError(err => xs.of({error: err}))
             .map(response => {
               if (response.status === 200) {
                 return {
@@ -26,11 +25,9 @@ export function getWeatherDetails(sources) {
                   payload: response.body,
                 };
               }
-              return;
             }),
         )
-        .flatten()
-    : xs.empty();
+        .flatten();
 
   const action$ = xs.combine(response$).map(([response]) => {
     if (response) {
