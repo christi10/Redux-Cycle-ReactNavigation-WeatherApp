@@ -13,9 +13,9 @@ const root = combineReducers({
 });
 const composeEnhancers = composeWithDevTools({});
 const cycleMiddleware = createCycleMiddleware();
-const { makeActionDriver } = cycleMiddleware;
+const { makeActionDriver,makeStateDriver } = cycleMiddleware;
 
-const middleware = [cycleMiddleware]; // Add additional middleware if needed
+const middleware = [cycleMiddleware];
 
 const enhancers = reactotron?.createEnhancer
     ? composeEnhancers(applyMiddleware(...middleware), reactotron.createEnhancer())
@@ -27,8 +27,9 @@ const store = createStore(
 );
 
 run(getWeatherDetails, {
-    ACTION: makeActionDriver(),
-    HTTP: makeHTTPDriver(),
+  ACTION: makeActionDriver(),
+  HTTP: makeHTTPDriver(),
+  STATE: makeStateDriver(),
 });
 
 export default store;

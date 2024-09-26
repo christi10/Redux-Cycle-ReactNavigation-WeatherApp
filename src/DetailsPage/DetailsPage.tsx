@@ -1,24 +1,23 @@
 import {ActionTypes} from '../../slices/weatherSlice';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ActivityIndicator, Text, View} from 'react-native';
-import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 export const WeatherComponent = ({weatherData}) => {
   if (weatherData.loading === true) {
-    return (
-      <ActivityIndicator size="small" color="#0000ff">
-      </ActivityIndicator>
-    );
+    return <ActivityIndicator size="small" color="#0000ff" />;
   }
 
   const {current, location} = weatherData;
 
   return (
     <View>
-        <View style={{flexDirection:'row'}}><Text>Location: {location.name}<View style={{paddingRight:2}}></View></Text></View>
-      <Text>Region:{location.region}</Text>
-      <Text>Country:{location.country}</Text>
+      <View style={{flexDirection: 'row'}}>
+        <Text>Location: {location.name}</Text>
+        <View style={{paddingRight: 2}} />
+      </View>
+      <Text>Region: {location.region}</Text>
+      <Text>Country: {location.country}</Text>
       <Text>
         Temperature: {current.temp_c}°C ({current.temp_f}°F)
       </Text>
@@ -37,17 +36,18 @@ export const WeatherComponent = ({weatherData}) => {
   );
 };
 
-export function DetailsScreen() {
+export function DetailsScreen({route}) {
   const dispatch = useDispatch();
   const weatherData = useSelector(state => state.weather);
+  const {city} = route.params;
 
   useEffect(() => {
     // Dispatch an action to fetch weather details
     dispatch({
       type: ActionTypes.FETCH_WEATHER,
-      payload: {city: 'Patra'},
+      payload: {city},
     });
-  }, []);
+  }, [city]);
 
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>

@@ -1,5 +1,4 @@
 
-// Define your action types
 export const ActionTypes = {
   FETCH_WEATHER: 'FETCH_WEATHER',
   FETCH_WEATHER_SUCCESS: 'FETCH_WEATHER_SUCCESS',
@@ -7,7 +6,6 @@ export const ActionTypes = {
   FETCH_WEATHER_ERROR: 'FETCH_WEATHER_ERROR',
 };
 
-// Define your initial state
 const initialState = {
   current: {
     cloud: 0,
@@ -62,14 +60,12 @@ function fetchWeather(state, action) {
 }
 
 function fetchWeatherSuccess(state, action) {
-  const {  location,current } = action.payload;
+  const {location,current} = action.payload;
 
   if (!location || !location.name) {
-    console.error('location object or name property is missing in the API response');
     return state;
   }
   if (!current) {
-    console.error('current object is missing in the API response');
     return state;
   }
 
